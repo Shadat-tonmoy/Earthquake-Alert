@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="7.2"
+        android:textColor="#000000"
         android:textAlignment="center"
         android:textSize="16sp"></TextView>
 
@@ -21,6 +22,7 @@
         android:layout_weight="1"
         android:text="San Fransisco"
         android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="16sp"></TextView>
 
     <TextView
@@ -29,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Jun 17, 2017"
+        android:textColor="#000000"
         android:textAlignment="center"
         android:textSize="16sp">
     </TextView>
