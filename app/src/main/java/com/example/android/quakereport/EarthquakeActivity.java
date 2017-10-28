@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 public class EarthquakeActivity extends AppCompatActivity {
@@ -36,7 +37,13 @@ public class EarthquakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
-        GetEarthQuakeData getEarthQuakeData = new GetEarthQuakeData();
+        debugView = (TextView) findViewById(R.id.debugView);
+        GetEarthQuakeData getEarthQuakeData = null;
+        try {
+            getEarthQuakeData = new GetEarthQuakeData(debugView);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         getEarthQuakeData.setEarthquakes();
         ArrayList<Earthquake> earthquakes = getEarthQuakeData.getEarthquakes();
         ListView earthquakeListView = (ListView) findViewById(R.id.list);

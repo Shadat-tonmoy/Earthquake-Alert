@@ -1,9 +1,17 @@
 package com.example.android.quakereport;
 
+import android.widget.TextView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +19,9 @@ import java.util.ArrayList;
  */
 
 public class GetEarthQuakeData {
-    public GetEarthQuakeData(){
+    private TextView debugView;
+    public GetEarthQuakeData(TextView debugView) throws MalformedURLException {
+        this.debugView = debugView;
 
     }
     ArrayList<Earthquake> earthquakes;
@@ -24,14 +34,23 @@ public class GetEarthQuakeData {
             "{\"type\":\"Feature\",\"properties\":{\"mag\":4.6,\"place\":\"8km SSW of Bodrum, Turkey\",\"time\":1508837784190,\"updated\":1508919373147,\"tz\":120,\"url\":\"https://earthquake.usgs.gov/earthquakes/eventpage/us1000aw8c\",\"detail\":\"https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us1000aw8c&format=geojson\",\"felt\":31,\"cdi\":5.1,\"mmi\":null,\"alert\":null,\"status\":\"reviewed\",\"tsunami\":0,\"sig\":341,\"net\":\"us\",\"code\":\"1000aw8c\",\"ids\":\",us1000aw8c,\",\"sources\":\",us,\",\"types\":\",dyfi,geoserve,moment-tensor,origin,phase-data,\",\"nst\":null,\"dmin\":0.958,\"rms\":1.5,\"gap\":44,\"magType\":\"mwr\",\"type\":\"earthquake\",\"title\":\"M 4.6 - 8km SSW of Bodrum, Turkey\"},\"geometry\":{\"type\":\"Point\",\"coordinates\":[27.3833,36.9672,10]},\"id\":\"us1000aw8c\"},\n" +
             "{\"type\":\"Feature\",\"properties\":{\"mag\":5.1,\"place\":\"45km S of Tanaga Volcano, Alaska\",\"time\":1508828973570,\"updated\":1508867458048,\"tz\":-600,\"url\":\"https://earthquake.usgs.gov/earthquakes/eventpage/us1000aw7s\",\"detail\":\"https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us1000aw7s&format=geojson\",\"felt\":null,\"cdi\":null,\"mmi\":3.5,\"alert\":null,\"status\":\"reviewed\",\"tsunami\":0,\"sig\":400,\"net\":\"us\",\"code\":\"1000aw7s\",\"ids\":\",ak17094161,us1000aw7s,\",\"sources\":\",ak,us,\",\"types\":\",geoserve,origin,phase-data,shakemap,\",\"nst\":null,\"dmin\":2.611,\"rms\":1.19,\"gap\":143,\"magType\":\"mb\",\"type\":\"earthquake\",\"title\":\"M 5.1 - 45km S of Tanaga Volcano, Alaska\"},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-178.2433,51.482,57.02]},\"id\":\"us1000aw7s\"}],\"bbox\":[-178.2433,-19.1321,10,139.8885,51.482,550.66]}";
 
+
+    String urlToParse = "https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=2017-10-25&endtime=2017-10-26&format=geojson&minmag=4.5";
+
+    URL url = null;
+    URLConnection urlConnection;
+    InputStream inputStream;
+
+
     public ArrayList<Earthquake> getEarthquakes()
     {
         return this.earthquakes;
     }
-    public void setEarthquakes()
-    {
+    public void setEarthquakes(){
         earthquakes = new ArrayList<Earthquake>();
         try {
+            url = new URL(urlToParse);
+            getData(url);
             JSONObject root = new JSONObject(data);
             JSONArray featuresArray = root.getJSONArray("features");
             for(int i=0;i<featuresArray.length();i++)
@@ -46,8 +65,29 @@ public class GetEarthQuakeData {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
+    public String getData(URL url){
+        String jsonResponse = "";
+        if(url==null)
+            return jsonResponse;
+        try {
+            urlConnection = url.openConnection();
+            urlConnection.addRequestProperty("method","get");
+            urlConnection.setReadTimeout(1500);
+            urlConnection.setConnectTimeout(1000);
+            urlConnection.connect();
+            String status = urlConnection.getRequestProperty("Status");
+            this.debugView.setText(status);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jsonResponse;
+    }
+
 
 
 }
