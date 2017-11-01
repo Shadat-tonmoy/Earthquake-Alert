@@ -1,6 +1,7 @@
 package com.example.android.quakereport;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -49,6 +50,14 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         String magnitude = earthquake.getMagnitude();
         String location = earthquake.getLocation();
         String date = earthquake.getDate();
+
+        double mag = Double.parseDouble(magnitude);
+        if(mag>=0.0 && mag<=4.0)
+            magnitudeView.setBackgroundResource(R.drawable.round_green);
+        else if(mag>4 && mag<=5.0)
+            magnitudeView.setBackgroundResource(R.drawable.round_yellow);
+        else magnitudeView.setBackgroundResource(R.drawable.round_red);
+
         Log.e("From adapter : ","mag:"+magnitude+" location : "+location+"\n");
 
         magnitudeView.setText(magnitude);

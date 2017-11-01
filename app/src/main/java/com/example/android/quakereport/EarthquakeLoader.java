@@ -28,7 +28,7 @@ import java.util.List;
 public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
     private TextView debugView;
 
-    String urlToParse = "https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=2017-10-25&endtime=2017-10-26&format=geojson&minmag=4.5";
+    String urlToParse = "https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=2017-10-25&endtime=2017-10-26&format=geojson&minmag=1.5";
     private List<Earthquake> earthquakes;
 
     public EarthquakeLoader(Context context) {

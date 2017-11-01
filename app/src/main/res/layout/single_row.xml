@@ -5,15 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/magnitude"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="7.2"
-        android:textColor="#000000"
-        android:textAlignment="center"
-        android:textSize="16sp"></TextView>
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/magnitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7.2"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:background="@drawable/round_green"
+            ></TextView>
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/location"
@@ -21,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="San Fransisco"
+        android:padding="10dp"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="16sp"></TextView>
@@ -30,6 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:padding="10dp"
         android:text="Jun 17, 2017"
         android:textColor="#000000"
         android:textAlignment="center"
