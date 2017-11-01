@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,6 +52,17 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         String location = earthquake.getLocation();
         String date = earthquake.getDate();
 
+        String[] dateArray = new Date(Long.parseLong(date)).toString().split(" ");
+        String day = dateArray[0];
+        String month = dateArray[1];
+        String date1 = dateArray[2];
+        String time = dateArray[3];
+        String year = dateArray[5];
+        String dateToView = day+", "+date1+" "+month+" "+year+"\n"+time;
+
+
+
+
         double mag = Double.parseDouble(magnitude);
         if(mag>=0.0 && mag<=4.0)
             magnitudeView.setBackgroundResource(R.drawable.round_green);
@@ -62,7 +74,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         magnitudeView.setText(magnitude);
         locationView.setText(location);
-        dateView.setText(date);
+        dateView.setText(dateToView.toString());
 
         return row;
     }
