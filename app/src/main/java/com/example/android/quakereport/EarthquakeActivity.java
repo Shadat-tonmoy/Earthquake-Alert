@@ -17,6 +17,8 @@ package com.example.android.quakereport;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.StringBuilderPrinter;
@@ -38,11 +40,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
-public class EarthquakeActivity extends AppCompatActivity {
+public class EarthquakeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Earthquake>> {
     private TextView debugView;
     ArrayList<Earthquake> earthquakes;
     ListView earthquakeListView;
+    EarthquakeAdapter adapter;
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
@@ -53,6 +57,8 @@ public class EarthquakeActivity extends AppCompatActivity {
         //debugView = (TextView) findViewById(R.id.debugView);
         earthquakes = new ArrayList<Earthquake>();
         earthquakeListView = (ListView) findViewById(R.id.list);
+        adapter = new EarthquakeAdapter(getApplicationContext(),R.layout.single_row,R.id.magnitude,earthquakes);
+        earthquakeListView.setAdapter(adapter);
 
 
         String urlToParse = "https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=2017-10-25&endtime=2017-10-26&format=geojson&minmag=4.5";
@@ -63,11 +69,40 @@ public class EarthquakeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        new GetData().execute(url);
+        getSupportLoaderManager().initLoader(1,null,this).forceLoad();
+
+        //new GetData().execute(url);
+    }
+
+    @Override
+    public Loader<List<Earthquake>> onCreateLoader(int id, Bundle args) {
+        Log.e("MSH","RUN");
+
+        return new EarthquakeLoader(EarthquakeActivity.this);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> data) {
+        Log.e("Loading is finished","Yes Man!!!");
+        for(int i=0;i<data.size();i++)
+        {
+            Earthquake earthquake = data.get(i);
+            String result = "new Quake : "+earthquake.getMagnitude()+" "+earthquake.getLocation()+" "+earthquake.getDate();
+            Log.e("Result : ",result);
+        }
+        adapter.setEarthquakes((ArrayList<Earthquake>) data);
+
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Earthquake>> loader) {
+        earthquakes = new ArrayList<Earthquake>();
+
     }
 
 
-    private class GetData extends AsyncTask<URL,Void,String>{
+    /*private class GetData extends AsyncTask<URL,Void,String>{
         String response = "";
         InputStream inputStream = null;
         @Override
@@ -137,5 +172,5 @@ public class EarthquakeActivity extends AppCompatActivity {
             }
             return stringBuilder.toString();
         }
-    }
+    }*/
 }

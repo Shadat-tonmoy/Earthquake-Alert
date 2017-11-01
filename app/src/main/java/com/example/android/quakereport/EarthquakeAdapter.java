@@ -5,12 +5,14 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,10 +23,12 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
     private View row;
     private TextView magnitudeView,locationView,dateView;
+    private ArrayList<Earthquake> earthquakes;
 
 
-    public EarthquakeAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId, @NonNull List<Earthquake> objects) {
-        super(context, resource, textViewResourceId, objects);
+    public EarthquakeAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId, @NonNull ArrayList<Earthquake> earthquakes) {
+        super(context, resource, textViewResourceId, earthquakes);
+        this.earthquakes = earthquakes;
     }
 
     @NonNull
@@ -45,11 +49,33 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         String magnitude = earthquake.getMagnitude();
         String location = earthquake.getLocation();
         String date = earthquake.getDate();
+        Log.e("From adapter : ","mag:"+magnitude+" location : "+location+"\n");
 
         magnitudeView.setText(magnitude);
         locationView.setText(location);
         dateView.setText(date);
 
         return row;
+    }
+
+    @Nullable
+    @Override
+    public Earthquake getItem(int position) {
+        return earthquakes.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+    @Override
+    public int getCount() {
+        return earthquakes.size();
+    }
+
+    public void setEarthquakes(ArrayList<Earthquake> earthquakes) {
+        Log.e("MESS","Settting earthquakes");
+        this.earthquakes = earthquakes;
+        notifyDataSetChanged();
     }
 }
