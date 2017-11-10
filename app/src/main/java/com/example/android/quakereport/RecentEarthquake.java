@@ -12,10 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,6 +27,7 @@ public class RecentEarthquake extends Fragment implements LoaderManager.LoaderCa
     ArrayList<Earthquake> earthquakes;
     EarthquakeAdapter adapter;
     private View view;
+    private TextView debugView;
 
 
 
@@ -53,14 +56,8 @@ public class RecentEarthquake extends Fragment implements LoaderManager.LoaderCa
         earthquakeListView = (ListView) view.findViewById(R.id.list);
         adapter = new EarthquakeAdapter(getActivity().getApplicationContext(),R.layout.single_row,R.id.magnitude,earthquakes);
         earthquakeListView.setAdapter(adapter);
+        //debugView = (TextView) view.findViewById(R.id.debug);
 
-        String urlToParse = "https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=2017-10-25&endtime=2017-10-26&format=geojson&minmag=4.5";
-        URL url = null;
-        try {
-            url = new URL(urlToParse);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
 
         getActivity().getSupportLoaderManager().initLoader(1,null,this).forceLoad();
     }

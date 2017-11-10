@@ -19,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,7 +29,18 @@ import java.util.List;
 public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
     private TextView debugView;
 
-    String urlToParse = "https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=2017-10-25&endtime=2017-10-26&format=geojson&minmag=1.5";
+    Date currentDate = new Date();
+    int year = currentDate.getYear()+1900;
+    int month = currentDate.getMonth()+1;
+    int date = currentDate.getDate();
+    String startTime = year+"-"+month+"-"+date;
+    Date twoDaysLater = new Date(currentDate.getTime()+ 2*24*60*60*1000);
+    int year2 = twoDaysLater.getYear()+1900;
+    int month2 = twoDaysLater.getMonth()+1;
+    int date2 = twoDaysLater.getDate();
+    String endTime = year2+"-"+month2+"-"+date2;
+
+    String urlToParse = "https://earthquake.usgs.gov/fdsnws/event/1/query?starttime="+startTime+"&endtime="+endTime+"&format=geojson&minmag=4.5";
     private List<Earthquake> earthquakes;
 
     public EarthquakeLoader(Context context) {

@@ -59,6 +59,33 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         String time = dateArray[3];
         String year = dateArray[5];
         String dateToView = day+", "+date1+" "+month+" "+year+"\n"+time;
+        String msg = "Message";
+        Date currentDate = new Date();
+        long currentTime = currentDate.getTime();
+        long earthquakeTime = Long.parseLong(date);
+        long difference = (currentTime - earthquakeTime)/1000;
+        long minutes = -1;
+        long seconds = -1;
+        if(difference>=60)
+        {
+            seconds = difference%60;
+            difference/=60;
+            msg = difference+" Mins "+seconds+" Secs ago";
+        }
+        if(difference>=60)
+        {
+            minutes = difference%60;
+            difference/=60;
+            msg = difference+" Hrs "+minutes+" Mins ago";
+        }
+        if(difference>=24)
+        {
+            difference/=24;
+            msg = difference+" Days Ago";
+        }
+
+
+
 
 
 
@@ -74,7 +101,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         magnitudeView.setText(magnitude);
         locationView.setText(location);
-        dateView.setText(dateToView.toString());
+        dateView.setText(msg);
 
         return row;
     }
