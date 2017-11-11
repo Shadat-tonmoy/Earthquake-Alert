@@ -9,9 +9,75 @@
         <!--android:text="Hello Debug"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content" />-->
+    <LinearLayout
+        android:id="@+id/nothing_found_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/nothing_found_img"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:src="@drawable/nothing_found"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Sorry!!! No Data Found"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="#e74c3c"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/no_internet_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/no_internet_img"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:src="@drawable/no_internet"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Please Check Your Network Connection"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/retryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Retry"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:textColor="@color/colorAccent"/>
+    </LinearLayout>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
